@@ -5,6 +5,7 @@ const keys = require("../../config/keys");
 const errorStrings = require("../../config/errorStrings");
 const { addUserValidation, loginValidation } = require("./validations");
 const User = require("../../models/User");
+const Role = require("../../models/Role");
 const { DEFAULT_PASSWORD } = require("../../config/constants");
 
 exports.addUser = async (req, res, next) => {
@@ -72,6 +73,12 @@ exports.loginUser = async (req, res, next) => {
       where: {
         email: req.body.email,
       },
+      include: [
+        {
+          model: Role,
+          as: "role",
+        },
+      ],
     });
 
     if (!user) {

@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../utils/database");
+const Role = require("./Role");
 
 const User = sequelize.define(
   "user",
@@ -42,5 +43,7 @@ User.prototype.toJSON = function () {
   delete values.password;
   return values;
 };
+
+User.belongsTo(Role, {foreignKey: "roleId"});
 
 module.exports = User;
