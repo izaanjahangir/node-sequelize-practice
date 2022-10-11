@@ -33,7 +33,7 @@ app.use((err, _, res, _a) => {
   res.status(err.status || 400).json({
     message: err.message.original
       ? err.message.original.errors[0].message
-      : err.message,
+      : err.message.message,
     success: false,
   });
 });

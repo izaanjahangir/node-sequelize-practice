@@ -6,5 +6,6 @@
     "DB_PWD": "12345678",
     "DB_NAME": "icad",
     "DB_INSTANCE": "IZAAN"
-  }
+  },
+  "JWT_SECRET": "VEXO21MATpLcIxMes9REDOu3kxNuu4mzfH0WHPtbJxOjNztkunhaBUpGxezN"
 }

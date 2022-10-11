@@ -22,3 +22,13 @@ exports.addUserValidation = (body) => {
     return errorStrings.ROLE_ID_REQUIRED;
   }
 };
+
+exports.loginValidation = (body) => {
+  if (!globalHelpers.isValidEmail(body.email)) {
+    return errorStrings.INVALID_EMAIL;
+  }
+
+  if (globalHelpers.isStringBlank(body.password)) {
+    return errorStrings.PASSWORD_REQUIRED;
+  }
+};

@@ -15,4 +15,5 @@ module.exports = {
     DB_NAME: config.get("DATABASE").DB_NAME,
     DB_INSTANCE: config.get("DATABASE").DB_INSTANCE,
   },
+  JWT_SECRET: config.get("JWT_SECRET"),
 };

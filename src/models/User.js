@@ -26,7 +26,7 @@ const User = sequelize.define(
     },
     password: {
       type: DataTypes.CHAR(60),
-      allowNull: false
+      allowNull: false,
     },
     roleId: {
       type: DataTypes.INTEGER,
@@ -36,8 +36,11 @@ const User = sequelize.define(
   {}
 );
 
-// User.sync()
-//   .then((res) => console.log("Done syncing user mode"))
-//   .catch((err) => console.error("Error syncing user model =>", err));
+User.prototype.toJSON = function () {
+  const values = Object.assign({}, this.get());
+
+  delete values.password;
+  return values;
+};
 
 module.exports = User;
