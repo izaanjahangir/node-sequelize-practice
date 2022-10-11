@@ -1,0 +1,10 @@
+{
+  "PORT": 5000,
+  "NODE_ENV": "development",
+  "DATABASE": {
+    "DB_USER": "ICADUser",
+    "DB_PWD": "12345678",
+    "DB_NAME": "icad",
+    "DB_INSTANCE": "IZAAN"
+  }
+}

@@ -1,19 +1,38 @@
 const express = require("express");
-const { loadSQLQuery } = require("./src/utils/sqlHelpers");
+const cors = require("cors");
+
+const keys = require("./src/config/keys");
+
+require("./src/utils/database");
 
 const app = express();
-const port = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cors());
 
 // Import all routes
-app.get("/api/ping", async (req, res) => {
-  try {
-    const data = await loadSQLQuery();
-    res.json({ message:data });
-  } catch (e) {}
+app.get("/ping", async (_, res) => {
+  res.json({ message: "pong", success: true, data: {} });
 });
 
-app.listen(port, () => {
-  console.log("Server is running on PORT " + port);
+app.use("/api", require("./src/routes"));
+
+app.use((err, _, res, _a) => {
+  console.log("err =>", err);
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    typeof err.message === "string" &&
+    err.message.startsWith("request to http")
+  ) {
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
+  }
+
+  res.status(err.status || 400).json({ message: err.message, success: false });
+});
+
+app.listen(keys.PORT, () => {
+  console.log("Server is running on PORT " + keys.PORT);
 });
