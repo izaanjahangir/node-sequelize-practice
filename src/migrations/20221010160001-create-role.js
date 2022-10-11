@@ -13,15 +13,19 @@ module.exports = {
       name: {
         type: Sequelize.DataTypes.STRING(30),
         allowNull: false,
-        unique: true,
+      },
+      code: {
+        type: Sequelize.DataTypes.STRING(30),
+        allowNull: false,
+        unique: true
       },
       createdAt: {
         type: Sequelize.DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updatedAt: {
         type: Sequelize.DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
       },
     });
   },

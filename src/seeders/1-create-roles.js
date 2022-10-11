@@ -8,16 +8,19 @@ module.exports = {
         queryInterface.bulkInsert("roles", [
           {
             name: "Super Admin",
+            code: "super-admin",
             createdAt: new Date(),
             updatedAt: new Date(),
           },
           {
             name: "Waiter",
+            code: "waiter",
             createdAt: new Date(),
             updatedAt: new Date(),
           },
           {
             name: "Chef",
+            code: "chef",
             createdAt: new Date(),
             updatedAt: new Date(),
           },
