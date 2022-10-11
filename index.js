@@ -30,7 +30,12 @@ app.use((err, _, res, _a) => {
       .json({ message: "Internal server error", success: false });
   }
 
-  res.status(err.status || 400).json({ message: err.message, success: false });
+  res.status(err.status || 400).json({
+    message: err.message.original
+      ? err.message.original.errors[0].message
+      : err.message,
+    success: false,
+  });
 });
 
 app.listen(keys.PORT, () => {

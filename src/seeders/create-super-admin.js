@@ -13,6 +13,8 @@ module.exports = {
             gender: "m",
             password: "12345678",
             roleId: 1,
+            createdAt: new Date(),
+            updatedAt: new Date()
           },
         ]),
       ]);

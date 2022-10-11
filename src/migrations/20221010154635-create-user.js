@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       firstName: {
         type: Sequelize.DataTypes.STRING(50),
@@ -34,6 +34,14 @@ module.exports = {
       password: {
         type: Sequelize.DataTypes.CHAR(60),
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
       },
     });
   },

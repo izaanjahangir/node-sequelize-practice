@@ -8,12 +8,20 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       name: {
         type: Sequelize.DataTypes.STRING(30),
         allowNull: false,
-        unique: true
+        unique: true,
+      },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false
       },
     });
   },
