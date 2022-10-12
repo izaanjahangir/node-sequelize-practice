@@ -9,7 +9,7 @@ const Role = sequelize.define(
       allowNull: false,
     },
   },
-  {}
+  {paranoid: true}
 );
 
 module.exports = Role;

@@ -38,7 +38,7 @@ const User = sequelize.define(
       defaultValue: false,
     },
   },
-  {}
+  { paranoid: true }
 );
 
 User.prototype.toJSON = function () {
