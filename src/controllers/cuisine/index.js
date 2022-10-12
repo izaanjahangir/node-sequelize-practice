@@ -25,3 +25,19 @@ exports.createCuisine = async (req, res, next) => {
     next({ message: e, status: e.status || 400 });
   }
 };
+
+exports.getAllCuisine = async (req, res, next) => {
+  try {
+    const cuisines = await Cuisine.findAll({});
+
+    res.json({
+      data: {
+        cuisines,
+      },
+      message: "success",
+      success: true,
+    });
+  } catch (e) {
+    next({ message: e, status: e.status || 400 });
+  }
+};
