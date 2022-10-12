@@ -3,7 +3,11 @@ const jwt = require("jsonwebtoken");
 
 const keys = require("../../config/keys");
 const errorStrings = require("../../config/errorStrings");
-const { addUserValidation, loginValidation } = require("./validations");
+const {
+  addUserValidation,
+  loginValidation,
+  changePasswordValidation,
+} = require("./validations");
 const User = require("../../models/User");
 const Role = require("../../models/Role");
 const { DEFAULT_PASSWORD } = require("../../config/constants");
@@ -115,6 +119,39 @@ exports.loginUser = async (req, res, next) => {
         user,
         token,
       },
+      message: "success",
+      success: true,
+    });
+  } catch (e) {
+    next({ message: e, status: e.status || 400 });
+  }
+};
+
+exports.changePassword = async (req, res, next) => {
+  try {
+    const validationErrors = changePasswordValidation(req.body);
+
+    if (validationErrors) {
+      throw { message: validationErrors, status: 400 };
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      req.body.currentPassword,
+      req.user.password
+    );
+
+    if (!isPasswordCorrect) {
+      throw { message: errorStrings.CURRENT_PASSWORD_WRONG, status: 401 };
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHash = bcrypt.hashSync(req.body.newPassword, salt);
+
+    req.user.password = passwordHash;
+    await req.user.save();
+
+    res.json({
+      data: {},
       message: "success",
       success: true,
     });

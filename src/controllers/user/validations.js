@@ -32,3 +32,21 @@ exports.loginValidation = (body) => {
     return errorStrings.PASSWORD_REQUIRED;
   }
 };
+
+exports.changePasswordValidation = (body) => {
+  if (globalHelpers.isStringBlank(body.currentPassword)) {
+    return errorStrings.CURRENT_PASSWORD_REQUIRED;
+  }
+
+  if (globalHelpers.isStringBlank(body.newPassword)) {
+    return errorStrings.NEW_PASSWORD_REQUIRED;
+  }
+
+  if (body.newPassword === body.currentPassword) {
+    return errorStrings.BOTH_PASSWORD_SAME;
+  }
+  
+  if (body.newPassword.length < 8) {
+    return errorStrings.PASSWORD_LENGTH;
+  }
+};

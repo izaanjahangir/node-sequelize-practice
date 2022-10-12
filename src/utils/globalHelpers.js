@@ -28,3 +28,15 @@ exports.concatenateName = (user) => {
 
   return (firstName + " " + lastName).trim();
 };
+
+exports.handleSequelizeError = (error) => {
+  if (error?.name == "SequelizeUniqueConstraintError") {
+    return error.original.toString();
+  }
+
+  if (typeof error === "object" && error.message) {
+    return error.message;
+  }
+
+  return error;
+};

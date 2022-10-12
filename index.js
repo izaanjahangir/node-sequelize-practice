@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const keys = require("./src/config/keys");
+const { handleSequelizeError } = require("./src/utils/globalHelpers");
 require("./src/utils/database");
 
 const app = express();
@@ -16,8 +17,8 @@ app.get("/ping", async (_, res) => {
 
 app.use("/api", require("./src/routes"));
 
-app.use((err, _, res, _a) => {
-  console.log("err =>", err);
+app.use((err, _, res, _a) => {  
+  const error = { ...err, message: handleSequelizeError(err.message) };
 
   if (
     process.env.NODE_ENV === "production" &&
@@ -29,10 +30,8 @@ app.use((err, _, res, _a) => {
       .json({ message: "Internal server error", success: false });
   }
 
-  res.status(err.status || 400).json({
-    message: err.message.original
-      ? err.message.original.errors[0].message
-      : err.message.message,
+  res.status(error.status || 400).json({
+    message: error.message,
     success: false,
   });
 });
