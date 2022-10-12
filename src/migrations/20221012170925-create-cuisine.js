@@ -16,7 +16,7 @@ module.exports = {
           allowNull: false,
         },
         imagePath: {
-          type: Sequelize.DataTypes.STRING(100),
+          type: Sequelize.DataTypes.STRING(1000),
           allowNull: false,
         },
         deletedAt: {

@@ -9,7 +9,7 @@ const Cuisine = sequelize.define(
       allowNull: false,
     },
     imagePath: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(1000),
       allowNull: false,
     },
   },

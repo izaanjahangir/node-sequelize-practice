@@ -7,6 +7,8 @@ module.exports = {
   CURRENT_PASSWORD_REQUIRED: "Current password is required",
   NEW_PASSWORD_REQUIRED: "New password is required",
   USER_ID_REQUIRED: "User id is required",
+  NAME_REQUIRED: "Name is required",
+  IMAGE_REQUIRED: "Image is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",
