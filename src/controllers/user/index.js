@@ -29,6 +29,7 @@ exports.addUser = async (req, res, next) => {
       password: passwordHash,
       gender: req.body.gender,
       roleId: req.body.roleId,
+      shouldChangePassword: true,
     });
 
     const emailPayload = await loadTemplateAndSend("AccountCreated", {

@@ -6,8 +6,8 @@
     "start": "cross-env NODE_ENV=production node index",
     "dev": "cross-env NODE_ENV=development nodemon index",
     "debug": "cross-env NODE_ENV=development nodemon --inspect index",
-    "migrate-development": "cross-env NODE_ENV=development npx sequelize-cli db:create --env=\"development\" && npx sequelize-cli db:migrate --env=\"development\"",
-    "seed-development": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all --env=\"development\""
+    "migrate-development": "cross-env NODE_ENV=development npx sequelize-cli db:create && cross-env NODE_ENV=development npx sequelize-cli db:migrate",
+    "seed-development": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all"
   },
   "license": "MIT",
   "dependencies": {

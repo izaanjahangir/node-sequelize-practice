@@ -33,6 +33,10 @@ const User = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    shouldChangePassword: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {}
 );
@@ -44,6 +48,6 @@ User.prototype.toJSON = function () {
   return values;
 };
 
-User.belongsTo(Role, {foreignKey: "roleId"});
+User.belongsTo(Role, { foreignKey: "roleId" });
 
 module.exports = User;

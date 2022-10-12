@@ -50,6 +50,10 @@ module.exports = {
           type: Sequelize.DataTypes.DATE,
           allowNull: false,
         },
+        shouldChangePassword: {
+          type: Sequelize.DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
       });
     } catch (e) {
       console.log("E.original.errors =>", e.original.errors);
