@@ -45,8 +45,18 @@ exports.changePasswordValidation = (body) => {
   if (body.newPassword === body.currentPassword) {
     return errorStrings.BOTH_PASSWORD_SAME;
   }
-  
+
   if (body.newPassword.length < 8) {
     return errorStrings.PASSWORD_LENGTH;
+  }
+};
+
+exports.changeRoleValidation = (body) => {
+  if (!globalHelpers.isNumber(body.roleId)) {
+    return errorStrings.ROLE_ID_REQUIRED;
+  }
+
+  if (!globalHelpers.isNumber(body.userId)) {
+    return errorStrings.USER_ID_REQUIRED;
   }
 };

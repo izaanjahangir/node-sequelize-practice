@@ -35,7 +35,9 @@ exports.handleSequelizeError = (error) => {
   }
 
   if (typeof error === "object" && error.message) {
-    return error.message;
+    return typeof error.message === "object"
+      ? error.message.message
+      : error.message;
   }
 
   return error;

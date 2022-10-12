@@ -7,6 +7,7 @@ const {
   addUserValidation,
   loginValidation,
   changePasswordValidation,
+  changeRoleValidation,
 } = require("./validations");
 const User = require("../../models/User");
 const Role = require("../../models/Role");
@@ -149,6 +150,38 @@ exports.changePassword = async (req, res, next) => {
 
     req.user.password = passwordHash;
     await req.user.save();
+
+    res.json({
+      data: {},
+      message: "success",
+      success: true,
+    });
+  } catch (e) {
+    next({ message: e, status: e.status || 400 });
+  }
+};
+
+exports.changeRole = async (req, res, next) => {
+  try {
+    const validationErrors = changeRoleValidation(req.body);
+
+    if (validationErrors) {
+      throw { message: validationErrors, status: 400 };
+    }
+
+    const [numberOfAffectedRows] = await User.update(
+      { roleId: req.body.roleId },
+      {
+        where: {
+          id: req.body.userId,
+        },
+        limit: 1,
+      }
+    );
+
+    if (numberOfAffectedRows === 0) {
+      throw { message: errorStrings.USER_NOT_FOUND, status: 404 };
+    }
 
     res.json({
       data: {},
