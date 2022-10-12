@@ -7,6 +7,9 @@ const { addUserValidation, loginValidation } = require("./validations");
 const User = require("../../models/User");
 const Role = require("../../models/Role");
 const { DEFAULT_PASSWORD } = require("../../config/constants");
+const { loadTemplateAndSend } = require("../../utils/templateEmailer");
+const { concatenateName } = require("../../utils/globalHelpers");
+const { sendMail } = require("../../utils/sendGrid");
 
 exports.addUser = async (req, res, next) => {
   try {
@@ -19,9 +22,7 @@ exports.addUser = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const passwordHash = bcrypt.hashSync(DEFAULT_PASSWORD, salt);
 
-    console.log("Computed hash =>", passwordHash);
-
-    const user = User.build({
+    const user = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -29,9 +30,21 @@ exports.addUser = async (req, res, next) => {
       gender: req.body.gender,
       roleId: req.body.roleId,
     });
-    await user.save();
 
-    console.log("User is created");
+    const emailPayload = await loadTemplateAndSend("AccountCreated", {
+      fullName: concatenateName(user),
+      email: req.body.email,
+      password: DEFAULT_PASSWORD,
+      link: keys.PORTAL_URL,
+    });
+
+    await sendMail({
+      to: user.email,
+      from: keys.APP_EMAIL,
+      subject: emailPayload.subject,
+      text: emailPayload.txtContent,
+      html: emailPayload.htmlContent,
+    });
 
     res.json({
       data: {

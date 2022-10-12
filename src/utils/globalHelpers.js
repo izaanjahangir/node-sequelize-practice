@@ -21,3 +21,10 @@ exports.isValidGender = (gender) => {
 exports.isNumber = (num) => {
   return typeof num === "number";
 };
+
+exports.concatenateName = (user) => {
+  const firstName = user?.firstName || "";
+  const lastName = user?.lastName || "";
+
+  return (firstName + " " + lastName).trim();
+};

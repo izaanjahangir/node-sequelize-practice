@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index",
-    "debug": "nodemon --inspect index",
-    "migrate-development": "npx sequelize-cli db:create --env=\"development\" && npx sequelize-cli db:migrate --env=\"development\"",
-    "seed-development": "npx sequelize-cli db:seed:all --env=\"development\""
+    "start": "cross-env NODE_ENV=production node index",
+    "dev": "cross-env NODE_ENV=development nodemon index",
+    "debug": "cross-env NODE_ENV=development nodemon --inspect index",
+    "migrate-development": "cross-env NODE_ENV=development npx sequelize-cli db:create --env=\"development\" && npx sequelize-cli db:migrate --env=\"development\"",
+    "seed-development": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all --env=\"development\""
   },
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcryptjs": "^2.4.3",
-    "config": "^3.3.8",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "fs-extra": "^10.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.1"
   }

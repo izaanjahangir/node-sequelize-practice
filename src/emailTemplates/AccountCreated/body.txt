@@ -1,0 +1,9 @@
+Hello {{fullName}},
+Your account has been created on ICAD Portal. Please use the following credentials to access your account on the portal
+{{link}}
+
+Email: {{email}}
+Password: {{password}}
+
+Thanks,
+Comnow

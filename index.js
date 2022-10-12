@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 
 const keys = require("./src/config/keys");
-
 require("./src/utils/database");
 
 const app = express();
