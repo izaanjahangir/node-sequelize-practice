@@ -18,4 +18,6 @@ module.exports = {
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   APP_EMAIL: process.env.APP_EMAIL,
   PORTAL_URL: process.env.PORTAL_URL,
+  SERVER_ROOT_URL: process.env.SERVER_ROOT_URL,
+  ASSET_ROOT_URL: process.env.SERVER_ROOT_URL + "/assets",
 };

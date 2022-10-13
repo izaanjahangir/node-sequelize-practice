@@ -1,6 +1,11 @@
 const validator = require("validator");
+const { v4: uuidv4 } = require("uuid");
 
 const { ALLOWED_GENDERS } = require("../config/constants");
+
+exports.getUniqueName = () => {
+  return uuidv4().slice(0, 5) + "-" + Date.now();
+};
 
 exports.isStringBlank = (str = "") => {
   return str.trim().length === 0;

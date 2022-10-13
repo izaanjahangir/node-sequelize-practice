@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const keys = require("./src/config/keys");
 const { handleSequelizeError } = require("./src/utils/globalHelpers");
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use("/assets", express.static(path.join(__dirname, "uploads")));
 
 // Import all routes
 app.get("/ping", async (_, res) => {
@@ -17,7 +19,7 @@ app.get("/ping", async (_, res) => {
 
 app.use("/api", require("./src/routes"));
 
-app.use((err, _, res, _a) => {  
+app.use((err, _, res, _a) => {
   const error = { ...err, message: handleSequelizeError(err.message) };
 
   if (
