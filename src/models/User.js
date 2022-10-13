@@ -1,4 +1,6 @@
 const { DataTypes } = require("sequelize");
+const bcrypt = require("bcryptjs");
+
 const sequelize = require("../utils/database");
 const Role = require("./Role");
 
@@ -28,6 +30,12 @@ const User = sequelize.define(
     password: {
       type: DataTypes.CHAR(60),
       allowNull: false,
+      set(value) {
+        const salt = bcrypt.genSaltSync(10);
+        const passwordHash = bcrypt.hashSync(value, salt);
+
+        this.setDataValue("password", passwordHash);
+      },
     },
     roleId: {
       type: DataTypes.INTEGER,

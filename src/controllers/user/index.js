@@ -24,14 +24,11 @@ exports.addUser = async (req, res, next) => {
       throw { message: validationErrors, status: 400 };
     }
 
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(DEFAULT_PASSWORD, salt);
-
     const user = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: passwordHash,
+      password: DEFAULT_PASSWORD,
       gender: req.body.gender,
       roleId: req.body.roleId,
       shouldChangePassword: true,
@@ -145,10 +142,7 @@ exports.changePassword = async (req, res, next) => {
       throw { message: errorStrings.CURRENT_PASSWORD_WRONG, status: 401 };
     }
 
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(req.body.newPassword, salt);
-
-    req.user.password = passwordHash;
+    req.user.password = req.body.newPassword;
     await req.user.save();
 
     res.json({
