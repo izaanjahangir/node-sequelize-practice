@@ -38,6 +38,7 @@ exports.getAllItems = async (req, res, next) => {
 
     const totalItems = await Item.count();
     const items = await Item.findAll({
+      order: [["name", "asc"]],
       offset: skipDoc,
       limit: limit,
       include: [

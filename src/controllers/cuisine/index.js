@@ -35,6 +35,7 @@ exports.getAllCuisine = async (req, res, next) => {
 
     const totalItems = await Cuisine.count();
     const cuisines = await Cuisine.findAll({
+      order: [["name", "asc"]],
       offset: skipDoc,
       limit: limit,
     });

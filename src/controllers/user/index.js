@@ -69,6 +69,7 @@ exports.getAllUsers = async (req, res, next) => {
 
     const totalItems = await User.count();
     const users = await User.findAll({
+      order: [["createdAt", "desc"]],
       offset: skipDoc,
       limit: limit,
     });
