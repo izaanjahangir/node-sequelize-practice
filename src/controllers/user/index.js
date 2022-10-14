@@ -13,7 +13,7 @@ const User = require("../../models/User");
 const Role = require("../../models/Role");
 const { DEFAULT_PASSWORD } = require("../../config/constants");
 const { loadTemplateAndSend } = require("../../utils/templateEmailer");
-const { concatenateName } = require("../../utils/globalHelpers");
+const globalHelpers = require("../../utils/globalHelpers");
 const { sendMail } = require("../../utils/sendGrid");
 
 exports.addUser = async (req, res, next) => {
@@ -35,7 +35,7 @@ exports.addUser = async (req, res, next) => {
     });
 
     const emailPayload = await loadTemplateAndSend("AccountCreated", {
-      fullName: concatenateName(user),
+      fullName: globalHelpers.concatenateName(user),
       email: req.body.email,
       password: DEFAULT_PASSWORD,
       link: keys.PORTAL_URL,
@@ -63,11 +63,24 @@ exports.addUser = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.findAll({});
+    const page = req.query.page || 1;
+    const skipDoc = globalHelpers.calculateSkipDoc(page);
+    const limit = globalHelpers.getLimit(req.query.limit);
+
+    const totalItems = await User.count();
+    const users = await User.findAll({
+      offset: skipDoc,
+      limit: limit,
+    });
+
+    const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({
       data: {
         users,
+        totalPages,
+        totalItems,
+        currentPage: Number(page),
       },
       message: "success",
       success: true,

@@ -2,6 +2,7 @@ const { createItemValidation } = require("./validations");
 const Item = require("../../models/Item");
 const ItemType = require("../../models/itemType");
 const Cuisine = require("../../models/Cuisine");
+const globalHelpers = require("../../utils/globalHelpers");
 
 exports.createItem = async (req, res, next) => {
   try {
@@ -31,7 +32,14 @@ exports.createItem = async (req, res, next) => {
 
 exports.getAllItems = async (req, res, next) => {
   try {
+    const page = req.query.page || 1;
+    const skipDoc = globalHelpers.calculateSkipDoc(page);
+    const limit = globalHelpers.getLimit(req.query.limit);
+
+    const totalItems = await Item.count();
     const items = await Item.findAll({
+      offset: skipDoc,
+      limit: limit,
       include: [
         {
           model: Cuisine,
@@ -44,8 +52,10 @@ exports.getAllItems = async (req, res, next) => {
       ],
     });
 
+    const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
+
     res.json({
-      data: { items },
+      data: { items, totalPages, totalItems, currentPage: Number(page) },
       message: "success",
       success: true,
     });

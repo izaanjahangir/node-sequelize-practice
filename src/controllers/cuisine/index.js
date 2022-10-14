@@ -1,5 +1,6 @@
 const { createCuisineValidation } = require("./validations");
 const Cuisine = require("../../models/Cuisine");
+const globalHelpers = require("../../utils/globalHelpers");
 
 exports.createCuisine = async (req, res, next) => {
   try {
@@ -28,11 +29,24 @@ exports.createCuisine = async (req, res, next) => {
 
 exports.getAllCuisine = async (req, res, next) => {
   try {
-    const cuisines = await Cuisine.findAll({});
+    const page = req.query.page || 1;
+    const skipDoc = globalHelpers.calculateSkipDoc(page);
+    const limit = globalHelpers.getLimit(req.query.limit);
+
+    const totalItems = await Cuisine.count();
+    const cuisines = await Cuisine.findAll({
+      offset: skipDoc,
+      limit: limit,
+    });
+
+    const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({
       data: {
         cuisines,
+        totalPages,
+        totalItems,
+        currentPage: Number(page),
       },
       message: "success",
       success: true,
