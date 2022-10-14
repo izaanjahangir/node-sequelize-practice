@@ -9,6 +9,9 @@ module.exports = {
   USER_ID_REQUIRED: "User id is required",
   NAME_REQUIRED: "Name is required",
   IMAGE_REQUIRED: "Image is required",
+  ITEM_TYPE_ID_REQUIRED: "Item type id is required",
+  CUISINE_ID_REQUIRED: "Cuisine id is required",
+  TIME_TO_PREPARE_REQUIRED: "Time to prepare is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",
