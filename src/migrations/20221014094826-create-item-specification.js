@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     try {
-      await queryInterface.createTable("items", {
+      await queryInterface.createTable("itemSpecifications", {
         id: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
@@ -12,35 +12,21 @@ module.exports = {
           primaryKey: true,
         },
         name: {
-          type: Sequelize.DataTypes.STRING(200),
+          type: Sequelize.DataTypes.STRING(100),
           allowNull: false,
         },
-        itemTypeId: {
+        itemId: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
           references: {
             model: {
-              tableName: "itemTypes",
+              tableName: "items",
             },
             key: "id",
           },
         },
-        cuisineId: {
-          type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
-          references: {
-            model: {
-              tableName: "cuisines",
-            },
-            key: "id",
-          },
-        },
-        timeToPrepare: {
-          type: Sequelize.DataTypes.INTEGER,
-          allowNull: false,
-        },
-        imagePath: {
-          type: Sequelize.DataTypes.STRING(1000),
+        value: {
+          type: Sequelize.DataTypes.STRING(100),
           allowNull: false,
         },
         createdAt: {
@@ -62,6 +48,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("items");
+    await queryInterface.dropTable("itemSpecifications");
   },
 };

@@ -2,14 +2,14 @@ const { DataTypes } = require("sequelize");
 
 const keys = require("../config/keys");
 const sequelize = require("../utils/database");
-const ItemType = require("./itemType");
+const ItemType = require("./ItemType");
 const Cuisine = require("./cuisine");
 
 const Item = sequelize.define(
   "item",
   {
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(200),
       allowNull: false,
     },
     itemTypeId: {

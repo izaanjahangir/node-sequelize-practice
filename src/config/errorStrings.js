@@ -12,6 +12,8 @@ module.exports = {
   ITEM_TYPE_ID_REQUIRED: "Item type id is required",
   CUISINE_ID_REQUIRED: "Cuisine id is required",
   TIME_TO_PREPARE_REQUIRED: "Time to prepare is required",
+  SPECIFICATION_NAME_REQUIRED: "Specification name is required",
+  SPECIFICATION_VALUE_REQUIRED: "Specification value is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",

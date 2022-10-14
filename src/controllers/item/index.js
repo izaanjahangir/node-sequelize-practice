@@ -1,7 +1,8 @@
 const { createItemValidation } = require("./validations");
 const Item = require("../../models/Item");
-const ItemType = require("../../models/itemType");
+const ItemType = require("../../models/ItemType");
 const Cuisine = require("../../models/Cuisine");
+const ItemSpecification = require("../../models/ItemSpecification");
 const globalHelpers = require("../../utils/globalHelpers");
 
 exports.createItem = async (req, res, next) => {
@@ -18,6 +19,33 @@ exports.createItem = async (req, res, next) => {
       cuisineId: req.body.cuisineId,
       timeToPrepare: req.body.timeToPrepare,
       imagePath: req.body.imagePath,
+    });
+
+    if (req.body.specifications && req.body.specifications.length) {
+      const specifications = req.body.specifications.map((spec) => ({
+        name: spec.name,
+        value: spec.value,
+        itemId: item.id,
+      }));
+
+      await ItemSpecification.bulkCreate(specifications);
+    }
+
+    await item.reload({
+      include: [
+        {
+          model: Cuisine,
+          as: "cuisine",
+        },
+        {
+          model: ItemType,
+          as: "itemType",
+        },
+        {
+          model: ItemSpecification,
+          as: "itemSpecifications",
+        },
+      ],
     });
 
     res.json({
@@ -49,6 +77,10 @@ exports.getAllItems = async (req, res, next) => {
         {
           model: ItemType,
           as: "itemType",
+        },
+        {
+          model: ItemSpecification,
+          as: "itemSpecifications",
         },
       ],
     });

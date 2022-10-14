@@ -21,4 +21,26 @@ exports.createItemValidation = (body) => {
   if (globalHelpers.isStringBlank(body.imagePath)) {
     return errorStrings.IMAGE_REQUIRED;
   }
+
+  const specificationArrayValidation = this.validateSpecificationArray(
+    body.specifications
+  );
+
+  if (specificationArrayValidation) {
+    return specificationArrayValidation;
+  }
+};
+
+exports.validateSpecificationArray = (specifications = []) => {
+  for (let i = 0; i < specifications.length; i++) {
+    const item = specifications[i];
+
+    if (globalHelpers.isStringBlank(item.name)) {
+      return errorStrings.SPECIFICATION_NAME_REQUIRED;
+    }
+
+    if (globalHelpers.isStringBlank(item.value)) {
+      return errorStrings.SPECIFICATION_VALUE_REQUIRED;
+    }
+  }
 };
