@@ -31,7 +31,7 @@ const Item = sequelize.define(
     imageURL: {
       type: DataTypes.VIRTUAL,
       get() {
-        if (this.imagePath.startsWith("https")) {
+        if (this.imagePath?.startsWith("http")) {
           return this.imagePath;
         }
 

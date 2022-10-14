@@ -67,3 +67,20 @@ exports.getLimit = (limit) => {
 exports.calculateSkipDoc = (page) => {
   return (Number(page) - 1) * LIMIT;
 };
+
+exports.separateCRUDEntries = (entries) => {
+  return entries.reduce(
+    (acc, item) => {
+      if (item.status === "create") acc.toCreate.push(item);
+      if (item.status === "update") acc.toUpdate.push(item);
+      if (item.status === "delete") acc.toDelete.push(item);
+
+      return acc;
+    },
+    {
+      toDelete: [],
+      toUpdate: [],
+      toCreate: [],
+    }
+  );
+};

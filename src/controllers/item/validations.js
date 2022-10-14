@@ -44,3 +44,9 @@ exports.validateSpecificationArray = (specifications = []) => {
     }
   }
 };
+
+exports.editItemValidation = (body) => {
+  if (!globalHelpers.isNumber(body.id)) {
+    return errorStrings.ID_REQUIRED;
+  }
+};

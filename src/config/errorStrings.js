@@ -24,5 +24,6 @@ module.exports = {
   BOTH_PASSWORD_SAME: "Both passwords cannot be same",
   PASSWORD_LENGTH: "Password should be atleast 8 characters long",
   USER_NOT_FOUND: "User not found",
-  CUISINE_NOT_FOUND: "Cuisine not found"
+  CUISINE_NOT_FOUND: "Cuisine not found",
+  ITEM_NOT_FOUND: "Item not found",
 };
