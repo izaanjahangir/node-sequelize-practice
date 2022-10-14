@@ -14,6 +14,7 @@ module.exports = {
   TIME_TO_PREPARE_REQUIRED: "Time to prepare is required",
   SPECIFICATION_NAME_REQUIRED: "Specification name is required",
   SPECIFICATION_VALUE_REQUIRED: "Specification value is required",
+  ID_REQUIRED: "Id is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",
@@ -23,4 +24,5 @@ module.exports = {
   BOTH_PASSWORD_SAME: "Both passwords cannot be same",
   PASSWORD_LENGTH: "Password should be atleast 8 characters long",
   USER_NOT_FOUND: "User not found",
+  CUISINE_NOT_FOUND: "Cuisine not found"
 };

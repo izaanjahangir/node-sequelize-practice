@@ -1,6 +1,10 @@
-const { createCuisineValidation } = require("./validations");
+const {
+  createCuisineValidation,
+  editCuisineValidation,
+} = require("./validations");
 const Cuisine = require("../../models/Cuisine");
 const globalHelpers = require("../../utils/globalHelpers");
+const errorStrings = require("../../config/errorStrings");
 
 exports.createCuisine = async (req, res, next) => {
   try {
@@ -48,6 +52,41 @@ exports.getAllCuisine = async (req, res, next) => {
         totalPages,
         totalItems,
         currentPage: Number(page),
+      },
+      message: "success",
+      success: true,
+    });
+  } catch (e) {
+    next({ message: e, status: e.status || 400 });
+  }
+};
+
+exports.editCuisine = async (req, res, next) => {
+  try {
+    const validationErrors = editCuisineValidation(req.body);
+
+    if (validationErrors) {
+      throw { message: validationErrors, status: 400 };
+    }
+
+    const cuisine = await Cuisine.update(
+      { ...req.body },
+      {
+        where: {
+          id: req.body.id,
+        },
+        limit: 1,
+        returning: true,
+      }
+    );
+
+    if (cuisine[0] === 0) {
+      throw { message: errorStrings.CUISINE_NOT_FOUND, status: 404 };
+    }
+
+    res.json({
+      data: {
+        cuisine: cuisine[1][0],
       },
       message: "success",
       success: true,
