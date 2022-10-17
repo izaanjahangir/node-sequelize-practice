@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "uploads")));
+app.use("/doc", express.static(path.join(__dirname, "apidoc")));
 
 // Import all routes
 app.get("/ping", async (_, res) => {

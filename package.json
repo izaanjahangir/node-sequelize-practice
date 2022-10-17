@@ -8,11 +8,13 @@
     "debug": "cross-env NODE_ENV=development nodemon --inspect index",
     "migrate-development": "cross-env NODE_ENV=development npx sequelize-cli db:create && cross-env NODE_ENV=development npx sequelize-cli db:migrate",
     "seed-development": "cross-env NODE_ENV=development npx sequelize-cli db:seed:all",
-    "init-db-development": "yarn run migrate-development && yarn run seed-development"
+    "init-db-development": "yarn run migrate-development && yarn run seed-development",
+    "doc": "apidoc -i src -o apidoc"
   },
   "license": "MIT",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
+    "apidoc": "^0.53.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
