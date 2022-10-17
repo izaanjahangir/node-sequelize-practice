@@ -7,6 +7,7 @@ const InventoryItem = sequelize.define(
     name: {
       type: DataTypes.STRING(200),
       allowNull: false,
+      unique: true
     },
     unitOfMeasurement: {
       type: DataTypes.STRING(20),

@@ -22,7 +22,7 @@ module.exports = {
           },
         },
         amountAvailable: {
-          type: Sequelize.DataTypes.INTEGER,
+          type: Sequelize.DataTypes.FLOAT,
           allowNull: false,
         },
 

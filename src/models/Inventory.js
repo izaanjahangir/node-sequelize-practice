@@ -11,7 +11,7 @@ const Inventory = sequelize.define(
       allowNull: false,
     },
     amountAvailable: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
   },

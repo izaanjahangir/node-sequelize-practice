@@ -14,6 +14,7 @@ module.exports = {
         name: {
           type: Sequelize.DataTypes.STRING(200),
           allowNull: false,
+          unique: true
         },
         unitOfMeasurement: {
           type: Sequelize.DataTypes.STRING(20),

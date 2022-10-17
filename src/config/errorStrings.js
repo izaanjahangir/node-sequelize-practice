@@ -15,6 +15,7 @@ module.exports = {
   SPECIFICATION_NAME_REQUIRED: "Specification name is required",
   SPECIFICATION_VALUE_REQUIRED: "Specification value is required",
   ID_REQUIRED: "Id is required",
+  UNIT_OF_MEASUREMENT_REQUIRED: "Unit of measurement is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",
