@@ -1,6 +1,7 @@
 const { editInventoryValidation } = require("./validations");
 const Inventory = require("../../models/Inventory");
 const InventoryItem = require("../../models/InventoryItem");
+const globalHelpers = require("../../utils/globalHelpers");
 
 exports.editInventory = async (req, res, next) => {
   try {
@@ -36,6 +37,37 @@ exports.editInventory = async (req, res, next) => {
 
     res.json({
       data: { inventory },
+      message: "success",
+      success: true,
+    });
+  } catch (e) {
+    next({ message: e, status: e.status || 400 });
+  }
+};
+
+exports.fetchInventory = async (req, res, next) => {
+  try {
+    const page = req.query.page || 1;
+    const skipDoc = globalHelpers.calculateSkipDoc(page);
+    const limit = globalHelpers.getLimit(req.query.limit);
+
+    const totalItems = await Inventory.count();
+    const inventories = await Inventory.findAll({
+      order: [["createdAt", "desc"]],
+      offset: skipDoc,
+      limit: limit,
+      include: [
+        {
+          model: InventoryItem,
+          as: "inventoryItem",
+        },
+      ],
+    });
+
+    const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
+
+    res.json({
+      data: { inventories, totalPages, totalItems, currentPage: Number(page) },
       message: "success",
       success: true,
     });
