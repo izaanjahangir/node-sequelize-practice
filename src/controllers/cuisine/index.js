@@ -37,13 +37,14 @@ exports.getAllCuisine = async (req, res, next) => {
     const skipDoc = globalHelpers.calculateSkipDoc(page);
     const limit = globalHelpers.getLimit(req.query.limit);
 
-    const totalItems = await Cuisine.count();
-    const cuisines = await Cuisine.findAll({
+    const cuisinesResponse = await Cuisine.findAndCountAll({
       order: [["name", "asc"]],
       offset: skipDoc,
       limit: limit,
     });
 
+    const cuisines = cuisinesResponse.rows;
+    const totalItems = cuisinesResponse.count;
     const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({

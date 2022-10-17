@@ -67,13 +67,14 @@ exports.getAllUsers = async (req, res, next) => {
     const skipDoc = globalHelpers.calculateSkipDoc(page);
     const limit = globalHelpers.getLimit(req.query.limit);
 
-    const totalItems = await User.count();
-    const users = await User.findAll({
+    const usersResponse = await User.findAndCountAll({
       order: [["createdAt", "desc"]],
       offset: skipDoc,
       limit: limit,
     });
 
+    const totalItems = usersResponse.count;
+    const users = usersResponse.rows;
     const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({

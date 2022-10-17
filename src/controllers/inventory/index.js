@@ -51,8 +51,7 @@ exports.fetchInventory = async (req, res, next) => {
     const skipDoc = globalHelpers.calculateSkipDoc(page);
     const limit = globalHelpers.getLimit(req.query.limit);
 
-    const totalItems = await Inventory.count();
-    const inventories = await Inventory.findAll({
+    const inventoriesResponse = await Inventory.findAndCountAll({
       order: [["createdAt", "desc"]],
       offset: skipDoc,
       limit: limit,
@@ -64,6 +63,8 @@ exports.fetchInventory = async (req, res, next) => {
       ],
     });
 
+    const inventories = inventoriesResponse.rows;
+    const totalItems = inventoriesResponse.count;
     const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({

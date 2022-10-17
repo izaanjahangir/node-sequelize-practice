@@ -31,13 +31,14 @@ exports.getInventoryItems = async (req, res, next) => {
     const skipDoc = globalHelpers.calculateSkipDoc(page);
     const limit = globalHelpers.getLimit(req.query.limit);
 
-    const totalItems = await InventoryItem.count();
-    const inventoryItems = await InventoryItem.findAll({
+    const inventoryItemsResponse = await InventoryItem.findAndCountAll({
       order: [["name", "asc"]],
       offset: skipDoc,
       limit: limit,
     });
 
+    const inventoryItems = inventoryItemsResponse.rows;
+    const totalItems = inventoryItemsResponse.count;
     const totalPages = globalHelpers.calculateTotalPage(totalItems, limit);
 
     res.json({
