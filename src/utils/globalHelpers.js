@@ -69,18 +69,21 @@ exports.calculateSkipDoc = (page) => {
 };
 
 exports.separateCRUDEntries = (entries) => {
-  return entries.reduce(
-    (acc, item) => {
-      if (item.status === "create") acc.toCreate.push(item);
-      if (item.status === "update") acc.toUpdate.push(item);
-      if (item.status === "delete") acc.toDelete.push(item);
+  const initialData = {
+    toDelete: [],
+    toUpdate: [],
+    toCreate: [],
+  };
+  
+  if (!entries) {
+    return initialData;
+  }
 
-      return acc;
-    },
-    {
-      toDelete: [],
-      toUpdate: [],
-      toCreate: [],
-    }
-  );
+  return entries.reduce((acc, item) => {
+    if (item.status === "create") acc.toCreate.push(item);
+    if (item.status === "update") acc.toUpdate.push(item);
+    if (item.status === "delete") acc.toDelete.push(item);
+
+    return acc;
+  }, initialData);
 };

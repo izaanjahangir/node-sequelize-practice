@@ -23,6 +23,9 @@ module.exports = (router) => {
    * @apiBody {Object[]} [specifications] Specifications should be an array of objects
    * @apiBody {String} specifications[name] Name of the specification
    * @apiBody {String} specifications[value] Value of the specification
+   * @apiBody {Object[]} [ingredients] ingredients should be an array of objects
+   * @apiBody {Number} ingredients[inventoryItemId] Inventory item id
+   * @apiBody {Number} ingredients[amount] Amount of ingredient, can be in digits with two decimal places
    *
    * @apiError message contains the error message. will be an array if the error is more than one, for example validation failed
    * @apiError success contains "false"
@@ -51,6 +54,11 @@ module.exports = (router) => {
    * @apiBody {String} specifications[id] Id of the specification, not needed for status = create
    * @apiBody {String} specifications[name] Name of the specification
    * @apiBody {String} specifications[value] Value of the specification
+   * @apiBody {Object[]} [ingredients] ingredients should be an array of objects
+   * @apiBody {Number} ingredients[inventoryItemId] Inventory item id
+   * @apiBody {Number} ingredients[amount] Amount of ingredient, can be in digits with two decimal places
+   * @apiBody {String} ingredients[status] Status of this ingredients, can be create|update|delete
+   * @apiBody {String} ingredients[id] Id of the ingredients, not needed for status = create
    *
    * @apiError message contains the error message. will be an array if the error is more than one, for example validation failed
    * @apiError success contains "false"
@@ -68,7 +76,7 @@ module.exports = (router) => {
    *     {
    *       "Authorization": "Bearer eyJhbGciOiJIUzI1N"
    *     }
-   * 
+   *
    * @apiQuery {Number} page Page number
    * @apiQuery {Number} [limit] Send 0 to fetch all records without pagination. Values other than 0 are ignored
    *

@@ -4,6 +4,7 @@ const ItemType = require("../../models/ItemType");
 const Cuisine = require("../../models/Cuisine");
 const ItemSpecification = require("../../models/ItemSpecification");
 const Ingredient = require("../../models/Ingredient");
+const InventoryItem = require("../../models/InventoryItem");
 const globalHelpers = require("../../utils/globalHelpers");
 const errorStrings = require("../../config/errorStrings");
 const sequelize = require("../../utils/database");
@@ -37,7 +38,7 @@ exports.createItem = async (req, res, next) => {
     if (req.body.ingredients && req.body.ingredients.length) {
       const ingredients = req.body.ingredients.map((ing) => ({
         inventoryItemId: ing.inventoryItemId,
-        amount: spec.amount,
+        amount: ing.amount,
         itemId: item.id,
       }));
 
@@ -61,6 +62,12 @@ exports.createItem = async (req, res, next) => {
         {
           model: Ingredient,
           as: "ingredients",
+          include: [
+            {
+              model: InventoryItem,
+              as: "inventoryItem",
+            },
+          ],
         },
       ],
     });
@@ -97,6 +104,16 @@ exports.getAllItems = async (req, res, next) => {
         {
           model: ItemSpecification,
           as: "itemSpecifications",
+        },
+        {
+          model: Ingredient,
+          as: "ingredients",
+          include: [
+            {
+              model: InventoryItem,
+              as: "inventoryItem",
+            },
+          ],
         },
       ],
     });
@@ -147,6 +164,11 @@ exports.editItem = async (req, res, next) => {
     const { toCreate, toUpdate, toDelete } = globalHelpers.separateCRUDEntries(
       req.body.specifications
     );
+    const {
+      toCreate: ingredientsToCreate,
+      toUpdate: ingredientsToUpdate,
+      toDelete: ingredientsToDelete,
+    } = globalHelpers.separateCRUDEntries(req.body.ingredients);
 
     await Promise.all([
       ItemSpecification.bulkCreate(
@@ -170,6 +192,27 @@ exports.editItem = async (req, res, next) => {
         },
         transaction,
       }),
+      Ingredient.bulkCreate(
+        ingredientsToCreate.map((spec) => ({ ...spec, itemId: item.id })),
+        { transaction }
+      ),
+      ...ingredientsToUpdate.map((ing) =>
+        Ingredient.update(
+          { ...ing },
+          {
+            where: {
+              id: ing.id,
+            },
+            transaction,
+          }
+        )
+      ),
+      Ingredient.destroy({
+        where: {
+          id: ingredientsToDelete.map((ing) => ing.id),
+        },
+        transaction,
+      }),
     ]);
 
     await transaction.commit();
@@ -186,6 +229,16 @@ exports.editItem = async (req, res, next) => {
         {
           model: ItemSpecification,
           as: "itemSpecifications",
+        },
+        {
+          model: Ingredient,
+          as: "ingredients",
+          include: [
+            {
+              model: InventoryItem,
+              as: "inventoryItem",
+            },
+          ],
         },
       ],
     });
