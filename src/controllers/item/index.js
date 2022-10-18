@@ -10,6 +10,8 @@ const errorStrings = require("../../config/errorStrings");
 const sequelize = require("../../utils/database");
 
 exports.createItem = async (req, res, next) => {
+  let transaction;
+
   try {
     const validationErrors = createItemValidation(req.body);
 
@@ -17,13 +19,20 @@ exports.createItem = async (req, res, next) => {
       throw { message: validationErrors, status: 400 };
     }
 
-    const item = await Item.create({
-      name: req.body.name,
-      itemTypeId: req.body.itemTypeId,
-      cuisineId: req.body.cuisineId,
-      timeToPrepare: req.body.timeToPrepare,
-      imagePath: req.body.imagePath,
-    });
+    transaction = await sequelize.transaction();
+
+    const item = await Item.create(
+      {
+        name: req.body.name,
+        itemTypeId: req.body.itemTypeId,
+        cuisineId: req.body.cuisineId,
+        timeToPrepare: req.body.timeToPrepare,
+        imagePath: req.body.imagePath,
+        price: req.body.price,
+        priceCurrencyCode: req.body.priceCurrencyCode,
+      },
+      { transaction }
+    );
 
     if (req.body.specifications && req.body.specifications.length) {
       const specifications = req.body.specifications.map((spec) => ({
@@ -32,7 +41,7 @@ exports.createItem = async (req, res, next) => {
         itemId: item.id,
       }));
 
-      await ItemSpecification.bulkCreate(specifications);
+      await ItemSpecification.bulkCreate(specifications, { transaction });
     }
 
     if (req.body.ingredients && req.body.ingredients.length) {
@@ -42,9 +51,10 @@ exports.createItem = async (req, res, next) => {
         itemId: item.id,
       }));
 
-      await Ingredient.bulkCreate(ingredients);
+      await Ingredient.bulkCreate(ingredients, { transaction });
     }
 
+    await transaction.commit();
     await item.reload({
       include: [
         {
@@ -78,6 +88,7 @@ exports.createItem = async (req, res, next) => {
       success: true,
     });
   } catch (e) {
+    await transaction.rollback();
     next({ message: e, status: e.status || 400 });
   }
 };
