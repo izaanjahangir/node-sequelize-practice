@@ -3,6 +3,7 @@ const Item = require("../../models/Item");
 const ItemType = require("../../models/ItemType");
 const Cuisine = require("../../models/Cuisine");
 const ItemSpecification = require("../../models/ItemSpecification");
+const Ingredient = require("../../models/Ingredient");
 const globalHelpers = require("../../utils/globalHelpers");
 const errorStrings = require("../../config/errorStrings");
 const sequelize = require("../../utils/database");
@@ -33,6 +34,16 @@ exports.createItem = async (req, res, next) => {
       await ItemSpecification.bulkCreate(specifications);
     }
 
+    if (req.body.ingredients && req.body.ingredients.length) {
+      const ingredients = req.body.ingredients.map((ing) => ({
+        inventoryItemId: ing.inventoryItemId,
+        amount: spec.amount,
+        itemId: item.id,
+      }));
+
+      await Ingredient.bulkCreate(ingredients);
+    }
+
     await item.reload({
       include: [
         {
@@ -46,6 +57,10 @@ exports.createItem = async (req, res, next) => {
         {
           model: ItemSpecification,
           as: "itemSpecifications",
+        },
+        {
+          model: Ingredient,
+          as: "ingredients",
         },
       ],
     });
