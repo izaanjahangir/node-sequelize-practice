@@ -15,6 +15,14 @@ module.exports = {
           type: Sequelize.DataTypes.STRING(200),
           allowNull: false,
         },
+        price: {
+          type: Sequelize.DataTypes.DECIMAL,
+          allowNull: false
+        },
+        priceCurrencyCode: {
+          type: Sequelize.DataTypes.STRING(3),
+          allowNull: false
+        },
         itemTypeId: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,

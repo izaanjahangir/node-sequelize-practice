@@ -28,6 +28,14 @@ const Item = sequelize.define(
       type: DataTypes.STRING(1000),
       allowNull: false,
     },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    priceCurrencyCode: {
+      type: DataTypes.STRING(3),
+      allowNull: false
+    },
     imageURL: {
       type: DataTypes.VIRTUAL,
       get() {
