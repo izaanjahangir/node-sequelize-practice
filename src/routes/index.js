@@ -9,5 +9,6 @@ require("./inventoryItem")(router);
 require("./inventory")(router);
 require("./kitchen")(router);
 require("./chef")(router);
+require("./role")(router);
 
 module.exports = router;
