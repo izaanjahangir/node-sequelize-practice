@@ -8,5 +8,6 @@ require("./item")(router);
 require("./inventoryItem")(router);
 require("./inventory")(router);
 require("./kitchen")(router);
+require("./chef")(router);
 
 module.exports = router;

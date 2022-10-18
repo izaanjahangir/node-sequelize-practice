@@ -19,7 +19,8 @@ module.exports = {
   INVENTORY_ITEM_ID_REQUIRED: "Inventory item id is required",
   AMOUNT_REQUIRED: "Amount is required",
   KITCHEN_NUMBER_REQUIRED: "Kitchen number is required",
-
+  KITCHEN_ID_REQUIRED: "Kitchen id is required",
+  
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",
   INVALID_LOGIN_CREDENTIALS: "Email or password is incorrect",
@@ -30,4 +31,5 @@ module.exports = {
   USER_NOT_FOUND: "User not found",
   CUISINE_NOT_FOUND: "Cuisine not found",
   ITEM_NOT_FOUND: "Item not found",
+  USER_NOT_CHEF: "User is not a chef"
 };
