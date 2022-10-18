@@ -29,6 +29,14 @@ exports.createItemValidation = (body) => {
   if (specificationArrayValidation) {
     return specificationArrayValidation;
   }
+
+  const ingredientsArrayValidation = this.validateIngredientsArray(
+    body.ingredients
+  );
+
+  if (ingredientsArrayValidation) {
+    return ingredientsArrayValidation;
+  }
 };
 
 exports.validateSpecificationArray = (specifications = []) => {
@@ -41,6 +49,20 @@ exports.validateSpecificationArray = (specifications = []) => {
 
     if (globalHelpers.isStringBlank(item.value)) {
       return errorStrings.SPECIFICATION_VALUE_REQUIRED;
+    }
+  }
+};
+
+exports.validateIngredientsArray = (ingredients = []) => {
+  for (let i = 0; i < ingredients.length; i++) {
+    const item = ingredients[i];
+
+    if (!globalHelpers.isNumber(item.inventoryItemId)) {
+      return errorStrings.INVENTORY_ITEM_ID_REQUIRED;
+    }
+
+    if (!globalHelpers.isNumber(item.amount)) {
+      return errorStrings.AMOUNT_REQUIRED;
     }
   }
 };
