@@ -12,6 +12,7 @@ const Kitchen = sequelize.define(
     kitchenNumber: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true
     },
   },
   { paranoid: true }

@@ -18,6 +18,7 @@ module.exports = {
         kitchenNumber: {
           type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
+          unique: true,
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,

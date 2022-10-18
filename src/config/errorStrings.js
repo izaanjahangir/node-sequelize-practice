@@ -18,6 +18,7 @@ module.exports = {
   UNIT_OF_MEASUREMENT_REQUIRED: "Unit of measurement is required",
   INVENTORY_ITEM_ID_REQUIRED: "Inventory item id is required",
   AMOUNT_REQUIRED: "Amount is required",
+  KITCHEN_NUMBER_REQUIRED: "Kitchen number is required",
 
   INVALID_EMAIL: "Please provide a valid email",
   INVALID_GENDER: "Allowed values for gender are m or f",

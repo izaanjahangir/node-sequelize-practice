@@ -7,5 +7,6 @@ require("./upload")(router);
 require("./item")(router);
 require("./inventoryItem")(router);
 require("./inventory")(router);
+require("./kitchen")(router);
 
 module.exports = router;
