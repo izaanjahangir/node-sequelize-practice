@@ -49,7 +49,55 @@ module.exports = (router) => {
    * @apiError success contains "false"
    */
   router.get(`${BASE_ROUTE}`, isSuperAdmin, getAllUsers);
+
+  /**
+   * @api {POST} /user/login User login
+   * @apiName User login
+   * @apiGroup User
+   *
+   * @apiBody {String} email Email of the user
+   * @apiBody {String} password Password of the user
+   *
+   * @apiError message contains the error message. will be an array if the error is more than one, for example validation failed
+   * @apiError success contains "false"
+   */
   router.post(`${BASE_ROUTE}/login`, loginUser);
+
+  /**
+   * @api {PATCH} /user/change-password Change password
+   * @apiName Change password
+   * @apiGroup User
+   *
+   * @apiHeader {String} Authorization token should be sent. In the following pattern Bearer {Token} replace by real token
+   *
+   * @apiHeaderExample {json} Header-Example:
+   *     {
+   *       "Authorization": "Bearer eyJhbGciOiJIUzI1N"
+   *     }
+   * @apiBody {String} currentPassword User current password
+   * @apiBody {String} newPassword User new password
+   *
+   * @apiError message contains the error message. will be an array if the error is more than one, for example validation failed
+   * @apiError success contains "false"
+   */
   router.patch(`${BASE_ROUTE}/change-password`, isUser, changePassword);
+
+  /**
+   * @api {PATCH} /user/change-role Change role
+   * @apiName Change role
+   * @apiGroup User
+   *
+   * @apiHeader {String} Authorization token should be sent. In the following pattern Bearer {Token} replace by real token
+   *
+   * @apiHeaderExample {json} Header-Example:
+   *     {
+   *       "Authorization": "Bearer eyJhbGciOiJIUzI1N"
+   *     }
+   * @apiBody {Number} userId User id
+   * @apiBody {Number} roleId Role id
+   *
+   * @apiError message contains the error message. will be an array if the error is more than one, for example validation failed
+   * @apiError success contains "false"
+   */
   router.patch(`${BASE_ROUTE}/change-role`, isSuperAdmin, changeRole);
 };
