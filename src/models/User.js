@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const sequelize = require("../utils/database");
 const Role = require("./Role");
+const Kitchen = require("./Kitchen");
 
 const User = sequelize.define(
   "user",
